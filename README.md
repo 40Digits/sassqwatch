@@ -151,7 +151,7 @@ var sassqwatch = require('sassqwatch').throttleOn(1000);
 
 #### throttleOff()
 
-Turns throttling off for the resize event on the `$(window)`. Throttling is already OFF by default for precise breakpoint handling. However, this can be costly for the performance of your app, which is why we provided the [`throttleOn` method](). You can use this method to manually turn throttling off again after calling `throttleOn`.
+Turns throttling off for the resize event on the `$(window)`. Throttling is already OFF by default for precise breakpoint handling. However, this can be costly for the performance of your app, which is why we provided the [`throttleOn` method](#throttleon-number). You can use this method to manually turn throttling off again after calling `throttleOn`.
 
 ```javascript
 var sassqwatch = require('sassqwatch').throttleOn(500);
@@ -188,7 +188,7 @@ You can also use this with background images.
 <div class="sassqwatch" style="background-image: url(default-image.jpg)" data-mq-mini="mini-image-src.jpg" data-mq-large="large-image-src.jpg"></div>
 ```
 
-*Note:* Make sure that the names of your data attributes match the names of the media queries that you [set up on `title` in your Sass/CSS](#3-set-up-sass-media-queries).
+*Note:* Make sure that the names of your data attributes match the names of the media queries that you [set up on `title` in your Sass/CSS](#4-set-up-sass-css-media-queries).
 
 ### Options
 * `selector`: A custom selector for `responsiveImages` to bind to instead of the default `.sassqwatch`.
