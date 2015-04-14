@@ -1,0 +1,47 @@
+{
+  "name": "sassqwatch",
+  "version": "0.1.0",
+  "description": "The Sass Query Watcher.",
+  "repository": "https://github.com/40Digits/sassqwatch/",
+  "main": "./lib/sassqwatch",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "sass",
+    "media",
+    "query",
+    "css",
+    "breakpoint",
+    "javascript",
+    "jquery"
+  ],
+  "author": "40Digits",
+  "license": "MIT",
+  "devDependencies": {
+    "browserify": "^9.0.8",
+    "browserify-shim": "^3.8.3",
+    "gulp": "^3.8.11",
+    "gulp-filesize": "0.0.6",
+    "gulp-livereload": "^3.7.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-util": "^3.0.0",
+    "minimatch": "^2.0.1",
+    "monocle": "^1.1.51",
+    "pretty-hrtime": "^1.0.0",
+    "require-dir": "^0.1.0",
+    "vinyl-source-stream": "^1.0.0"
+  },
+  "dependencies": {
+    "jquery": "^2.1.3"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "global:$"
+  }
+}
