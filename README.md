@@ -93,6 +93,20 @@ sassqwatch.onMediaQuery('mq-medium', function (oldMediaQuery) {
   console.log('Media query switched to mq-medium from ' + oldMediaQuery);
 });
 ```
+
+#### when( direction, breakpoint, callback )
+`direction` (string): "above" or "below"
+`breakpoint` (string): the name of the media query to check for
+`callback` (function): the callback function to call
+
+Listens for when a specified breakpoint is active. The callback is provided the name of the previous media query.
+
+```javascript
+sassqwatch.onMediaQuery('mq-medium', function (oldMediaQuery) {
+  console.log('Media query switched to mq-medium from ' + oldMediaQuery);
+});
+```
+
 ## Methods
 
 #### fetchMediaQuery()
