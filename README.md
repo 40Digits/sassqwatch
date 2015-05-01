@@ -4,7 +4,7 @@ This lightweight script offers a way to do various checks against CSS media quer
 
 Best used with [Browserify](https://www.npmjs.com/package/browserify).
 
-## Setup
+## Setup With Browserify
 
 ### 1. Install with NPM.
 ```bash
@@ -27,13 +27,13 @@ title {
   font-family: 'mq-small, mq-medium, mq-large';
 }
 head {
-  @media (min-width: $break-small) {
+  @media (min-width: 480px) {
     font-family: 'mq-small';
   }
-  @media (min-width: $break-medium) {
+  @media (min-width: 600px) {
     font-family: 'mq-small';
   }
-  @media (min-width: $break-large) {
+  @media (min-width: 768px) {
     font-family: 'mq-large';
   }
 }
@@ -71,8 +71,8 @@ Easy peasy.
 
 ## Events
 
-#### onMediaQueryChange( function )
-`function`: the callback function to call when the media changes
+#### onMediaQueryChange( callback )
+`callback` (function): the callback function to call when the media query changes
 
 The callback is provided the name of the new media query and the name of the previous media query.
 
@@ -117,8 +117,8 @@ Manually returns the current media query.
 var thisBreakpoint = sassqwatch.fetchMediaQuery();
 ```
 
-#### fetchMqName( number )
-`number`: the index of the media query to return
+#### fetchMqName( index )
+`index` (number): the index of the media query to return
 
 Returns a string of the name of the requested media query from the ordered array of media queries.
 
@@ -132,8 +132,8 @@ for (i; i > 0; i--) {
 }
 ```
 
-#### fetchMqIndex( string )
-`string`: the name of the media query to return
+#### fetchMqIndex( breakpoint )
+`breakpoint` (string): the name of the media query to return
 
 Returns an integer of the index of the requested media query from the ordered array of media queries.
 
@@ -143,8 +143,8 @@ sassqwatch.onMediaQueryChange(function (newMediaQuery, oldMediaQuery) {
 });
 ```
 
-#### isBelow( string )
-`string`: the media query to check against.
+#### isBelow( breakpoint )
+`breakpoint` (string): the media query to check against.
 
 Returns `true` if the current media query is below a specified media query, and `false` otherwise.
 
@@ -154,8 +154,8 @@ if ( sassqwatch.isBelow('mq-large') ) {
 }
 ```
 
-#### isAbove( string )
-`string`: the media query to check against.
+#### isAbove( breakpoint )
+`breakpoint` (string): the media query to check against.
 
 Returns `true` if the current media query is above a specified media query, and `false` otherwise.
 
@@ -165,8 +165,8 @@ if ( sassqwatch.isAbove('mq-tiny') ) {
 }
 ```
 
-#### throttleOn( number )
-`number`: the interval in milliseconds at which to throttle the event (default: `250`)
+#### throttleOn( interval )
+`interval` (number): the interval in milliseconds at which to throttle the event (default: `250`)
 
 Turns throttling on for the resize event on the `$(window)`. This makes the window resizing on your app more effecient, but less precise.
 
