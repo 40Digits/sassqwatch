@@ -379,22 +379,8 @@ var onMediaQueryChange = function(callback) {
 };
 
 /**
- * Public: Event fires on the specified media query
- * @param which - The media query to check against
- * @param callback - The function to call when the event is fired
- */
-var onMediaQuery = function(which, callback) {
-  $listenElement.on('mediaQueryChange', function(e, newMediaQuery, oldMediaQuery) {
-    if (matches(which)) {
-      callback(oldMediaQuery);
-    }
-  });
-  return this;
-};
-
-/**
- * Public: A convenience method to fire a callback when above or below a specified breakpoint
- * @param direction - A string "above" or "below"
+ * Public: A convenience method to fire a callback when above, below, or on a specified breakpoint
+ * @param direction - A string "above", "below", or "on"
  * @param which - The media query to check against
  * @param callback - The function to call when the event is fired
  */
@@ -404,15 +390,21 @@ var when = function(direction, which, callback) {
     check;
 
   if (dir === 'above') {
-    check = function() {
+    check = function(e, newMediaQuery) {
       if (isAbove(which)) {
-        callback();
+        callback(newMediaQuery);
       }
     }
   } else if (dir === 'below') {
-    check = function() {
+    check = function(e, newMediaQuery) {
       if (isBelow(which)) {
-        callback();
+        callback(newMediaQuery);
+      }
+    }
+  } else if (dir === 'on') {
+    check = function(e, newMediaQuery, oldMediaQuery) {
+      if (matches(which)) {
+        callback(oldMediaQuery);
       }
     }
   }
@@ -517,7 +509,6 @@ var constructor = function() {
   // return the public methods
   return {
     onMediaQueryChange: onMediaQueryChange,
-    onMediaQuery:       onMediaQuery,
     when:               when,
     fetchMediaQuery:    fetchMediaQuery,
     fetchMqIndex:       fetchMqIndex,

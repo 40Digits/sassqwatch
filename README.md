@@ -82,31 +82,21 @@ sassqwatch.onMediaQueryChange(function (newMediaQuery, oldMediaQuery) {
 });
 ```
 
-#### onMediaQuery( breakpoint, callback )
-`breakpoint` (string): the name of the media query to check for
-
-`callback` (function): the callback function to call
-
-Listens for when a specified breakpoint is active. The callback is provided the name of the previous media query.
-
-```javascript
-sassqwatch.onMediaQuery('mq-medium', function (oldMediaQuery) {
-  console.log('Media query switched to mq-medium from ' + oldMediaQuery);
-});
-```
-
 #### when( direction, breakpoint, callback )
-`direction` (string): "above" or "below"
+`direction` (string): "above", "below", or "on"
 
 `breakpoint` (string): the name of the media query to check for
 
 `callback` (function): the callback function to call
 
-Listens for when a specified breakpoint is active. The callback is provided the name of the previous media query.
+Fires a callback when the current breakpoint is above, below, or on the specified breakpoint. If checking for "above" or "below" then the callback receives the name of the new media query. If checking for "on" the callback receives the name of the old media query.
 
 ```javascript
-sassqwatch.onMediaQuery('mq-medium', function (oldMediaQuery) {
-  console.log('Media query switched to mq-medium from ' + oldMediaQuery);
+sassqwatch.when('above', 'mq-medium', function (newMediaQuery) {
+  console.log('now above mq-medium');
+});
+sassqwatch.when('on', 'mq-xxlarge', function (oldMediaQuery) {
+  console.log('now on mq-xxlarge');
 });
 ```
 
