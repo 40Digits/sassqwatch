@@ -1,16 +1,18 @@
 var
-  sassqwatch = require('sassqwatch').throttleOn(),
-  breakpoint1 = 'mq-medium',
-  breakpoint2 = 'mq-small';
+  sassqwatch = require('sassqwatch'),
+  breakpoint = 'mq-medium';
 
 // you can chain methods!
 sassqwatch
   .responsiveImages({
   	selector: $('.responsive')
   })
-  .when('above', breakpoint1, function() {
-    console.log('breakpoint is above ' + breakpoint1);
+  .min(breakpoint, function(newMQ) {
+    console.log('breakpoint is a minimum of ' + breakpoint);
   })
-  .when('on', breakpoint2, function() {
-    console.log('breakpoint is ' + breakpoint2);
+  .max(breakpoint, function(newMQ) {
+    console.log('breakpoint is ' + newMQ);
+  })
+  .only(breakpoint, function(oldMQ) {
+    console.log('breakpoint was ' + oldMQ);
   });
