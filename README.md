@@ -53,13 +53,9 @@ var sassqwatch = require('sassqwatch');
 
 // then use the methods like you would in a browserify module
 
-// example: globally throttle the resize event on the window
-//          with a custom interval
-sassqwatch.throttleOn(500);
-
 // example: call the responsiveImages module with some custom options
 sassqwatch.responsiveImages({
-  selector: $('.responsive')
+  selector: '.responsive'
 });
 ```
 
