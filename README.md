@@ -166,7 +166,7 @@ for (i; i > 0; i--) {
 Returns an integer of the index of the requested media query from the ordered array of media queries.
 
 ```javascript
-sassqwatch.onMediaQueryChange(function (newMediaQuery, oldMediaQuery) {
+sassqwatch.onChange(function (newMediaQuery, oldMediaQuery) {
   var breakpointIndex = sassqwatch.fetchMqIndex(newMediaQuery);
 });
 ```
