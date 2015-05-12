@@ -17,10 +17,7 @@ var sassqwatch = require('sassqwatch');
 ```
 Requiring SassQwatch sets up the link to your Sass breakpoints then returns an object with [some helpful methods](#methods) that you can use in your modules.
 
-### 3. Setup jQuery
-SassQwatch depends on jQuery, which is a rather large library and is not bundled with SassQwatch. However, it is defined as a dependency in the module's `package.json` file, which means that jQuery will be downloaded into your `node_modules` directory after you run `npm install`. It is very important to properly setup jQuery in your project. If you would rather not have jQuery in your Browserify bundle and include it using a [CDN](https://developers.google.com/speed/libraries/), then consider using [browserify-shim](https://www.npmjs.com/package/browserify-shim) and using the alias `jquery` ([example](https://www.npmjs.com/package/browserify-shim#you-will-sometimes)). This will ensure that SassQwatch has a proper reference to the library when it uses `require('jquery')`.
-
-### 4. Set up Sass/CSS Media Queries
+### 3. Set up Sass/CSS Media Queries
 SassQwatch looks at the `font-family` property of the `head` element in your CSS to check for the current breakpoint. It needs to know the order of your breakpoints, so list them on `title`. Then set up your media queries with appropriate names:
 ```sass
 title {
@@ -42,9 +39,8 @@ Ideally you would use a nifty sass mixin to set all of this up.
 
 
 ## Setup Without Browserify
-Not using Browserify? No sweat! Just include `sassqwatch.js` or `sassqwatch.min.js` – in the root of the repo – in your html after jQuery like so:
+Not using Browserify? No sweat! Just include `sassqwatch.js` or `sassqwatch.min.js` in your project:
 ```html
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="sassqwatch.min.js"></script>
 <script src="app.js"></script>
 ```
@@ -71,13 +67,13 @@ Easy peasy.
 
 ## Events
 
-#### onMediaQueryChange( callback )
+#### onChange( callback )
 `callback` (function): the callback function to call when the media query changes
 
 The callback is provided the name of the new media query and the name of the previous media query.
 
 ```javascript
-sassqwatch.onMediaQueryChange(function (newMediaQuery, oldMediaQuery) {
+sassqwatch.onChange(function (newMediaQuery, oldMediaQuery) {
   console.log('Media query switched to ' + newMediaQuery + ' from ' + oldMediaQuery);
 });
 ```
@@ -201,25 +197,15 @@ if ( sassqwatch.isAbove('mq-tiny') ) {
 }
 ```
 
-#### throttleOn( interval )
-`interval` (number): the interval in milliseconds at which to throttle the event (default: `250`)
+#### matches( breakpoint )
+`breakpoint` (string): the media query to check against.
 
-Turns throttling on for the resize event on the `$(window)`. This makes the window resizing on your app more effecient, but less precise.
-
-```javascript
-var sassqwatch = require('sassqwatch').throttleOn(1000);
-```
-
-#### throttleOff()
-
-Turns throttling off for the resize event on the `$(window)`. Throttling is already OFF by default for precise breakpoint handling. However, this can be costly for the performance of your app, which is why we provided the [`throttleOn` method](#throttleon-number). You can use this method to manually turn throttling off again after calling `throttleOn`.
+Returns `true` if the current media query matches a specified media query, and `false` otherwise.
 
 ```javascript
-var sassqwatch = require('sassqwatch').throttleOn(500);
-
-// do some stuff
-
-sassqwatch.throttleOff();
+if ( sassqwatch.matches('mq-tiny') ) {
+  console.log('Media query is mq-tiny.');
+}
 ```
 
 ## Responsive Images Module
@@ -255,12 +241,6 @@ You can also use this with background images.
 * `selector`: A custom selector for `responsiveImages` to bind to instead of the default `.sassqwatch`.
 
   ```javascript
-  sassqwatch.responsiveImages({
-    selector: $('.responsive')
-  });
-
-  // or
-
   sassqwatch.responsiveImages({
     selector: '.responsive'
   });
