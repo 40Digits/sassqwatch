@@ -5,7 +5,7 @@ var
 // you can chain methods!
 sassqwatch
   .responsiveImages({
-  	selector: $('.responsive')
+  	selector: '.responsive'
   })
   .min(breakpoint, function(newMQ) {
     console.log('breakpoint is a minimum of ' + breakpoint);
