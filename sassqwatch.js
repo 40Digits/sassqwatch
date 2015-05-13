@@ -107,7 +107,7 @@ module.exports = function($el) {
  * @param src The source of the image to load
  * @param callback The function to call when the image is loaded
  */
-var preloader = function(src, callback) {
+var preloader = function(src, obj, callback) {
   var
     loaded = false,
     img = new Image();
@@ -117,7 +117,7 @@ var preloader = function(src, callback) {
       return;
     }
     loaded = true;
-    callback(src);
+    callback(src, obj);
     img = null;
   };
 
@@ -210,6 +210,12 @@ module.exports = function(options) {
     }
   };
 
+  /**
+   * Checks to see if there is a retina src provided on an image
+   * @param  {object} imageObject An object in the array of known image sizes
+   * @param  {string} mediaQuery  The name of the media query to check against
+   * @return {string}             The image src
+   */
   var checkForRetinaSrc = function(imageObject, mediaQuery) {
     // if this is a retina screen and there is a retina src
     if (retina && imageObject[mediaQuery + '-2x']) {
@@ -230,7 +236,6 @@ module.exports = function(options) {
       thisMQ        = undefined,
       thisImage     = undefined,
       newSource     = undefined,
-      waiting       = [],
       i             = 0,
       ii            = 0;
 
@@ -276,19 +281,13 @@ module.exports = function(options) {
         if (isLoaded) {
           swapImage(thisImage.$image, newSource);
         } else {
-          // store image element which needs its src swapped in a waiting list
-          // preloader will probably call the callback after for loop continues
-          // which means that 'thisImage', will not be the one we want when the time comes
-          waiting[i] = thisImage.$image;
           // preload the image to swap
           // and update the list of loaded src's
-          preloader(newSource, function(src) {
+          preloader(newSource, thisImage, function(src, obj) {
             // swap out the src on the first item in the waiting list
-            swapImage(waiting[0], src);
+            swapImage(obj.$image, src);
             // store this src as loaded
-            thisImage.loaded.push(src);
-            // remove the image from the waiting list
-            waiting.shift();
+            obj.loaded.push(src);
           });
         }
 
