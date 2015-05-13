@@ -233,6 +233,12 @@ You can also use this with background images.
 
 *Note:* Make sure that the names of your data attributes match the names of the media queries that you [set up on `title` in your Sass/CSS](#4-set-up-sass-css-media-queries).
 
+SassQwatch can even handle "retina" images on every media query for screens with a high pixel density. Just add a new media query data attribute with "2x" at the end and SassQwatch will do the rest.
+
+```html
+<img class="sassqwatch" src="default-image.jpg" data-mq-mini="mini-image-src.jpg" data-mq-mini-2x="large-image-src@2x.jpg" />
+```
+
 ### Options
 * `selector`: A custom selector for `responsiveImages` to bind to instead of the default `.sassqwatch`.
 

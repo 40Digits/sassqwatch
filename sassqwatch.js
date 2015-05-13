@@ -149,6 +149,7 @@ module.exports = function(options) {
     defaultSelector = elementify('.sassqwatch'),
     settings = extend({ selector: defaultSelector }, options),
     knownSizes = [],
+    retina = (window.devicePixelRatio >= 1.5) ? true : false,
     i = 0;
 
   /**
@@ -209,6 +210,15 @@ module.exports = function(options) {
     }
   };
 
+  var checkForRetinaSrc = function(imageObject, mediaQuery) {
+    // if this is a retina screen and there is a retina src
+    if (retina && imageObject[mediaQuery + '-2x']) {
+      return imageObject[mediaQuery + '-2x'];
+    } else {
+      return imageObject[mediaQuery];
+    }
+  };
+
   /**
    * Run through each responsive image and see if an image exists at that media query
    * @param newMediaQuery [current] The new media query to load
@@ -228,21 +238,21 @@ module.exports = function(options) {
     // and update the image src if it has one for this breakpoint
     for(i; i < knownSizes.length; i++) {
       thisImage = knownSizes[i];
-      newSource = thisImage[newMediaQuery];
+      // checks if we're on a retina screen and if there is a 2x src defined
+      newSource = checkForRetinaSrc(thisImage, newMediaQuery);
 
       // if a new source isn't set
       if (!newSource) {
+        // get the index of the current media query to start from
         ii = sassqwatch.fetchMqIndex(newMediaQuery);
 
         // decrement through the numbered mq's
         for (ii; ii > 0; ii--) {
           thisMQ = sassqwatch.fetchMqName(ii);
+          newSource = checkForRetinaSrc(thisImage, thisMQ);
 
-          // if a matched mq is found on the image
-          if (thisImage[thisMQ]) {
-            newSource = thisImage[thisMQ];
-            break;
-          }
+          // break the loop if a source is found
+          if (newSource) break;
         }
         // if after all that no source was found
         // then just revert back to the original source
