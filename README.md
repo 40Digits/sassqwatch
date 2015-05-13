@@ -235,6 +235,7 @@ You can also use this with background images.
 
 SassQwatch can even handle "retina" images on every media query for screens with a high pixel density. Just add a new media query data attribute with "2x" at the end and SassQwatch will do the rest.
 
+
 ```html
 <img class="sassqwatch" src="default-image.jpg" data-mq-mini="mini-image-src.jpg" data-mq-mini-2x="large-image-src@2x.jpg" />
 ```
