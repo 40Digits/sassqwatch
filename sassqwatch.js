@@ -1,4 +1,9 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/**
+ * Returns an element object from an element identifier
+ * @param  {String} el An element identifier – Must be a class or ID reference
+ * @return {Element}   The element object reference
+ */
 module.exports = function(el) {
   if (typeof el === 'string') {
     var identifier = el.slice(0, 1),
@@ -14,6 +19,12 @@ module.exports = function(el) {
   }
 };
 },{}],2:[function(require,module,exports){
+/**
+ * Returns a new merged object from two objects
+ * @param  {Object} obj1 The object to extend
+ * @param  {Object} obj2 The object to merge into the original
+ * @return {Object}      The merged object
+ */
 module.exports = function(obj1, obj2) {
   for(key in obj2) {
     if (obj2.hasOwnProperty(key)) {
@@ -82,6 +93,11 @@ if (!Array.prototype.forEach) {
   };
 }
 },{}],4:[function(require,module,exports){
+/**
+ * Returns the data attribute labels and values from a given element
+ * @param  {Element} $el The element to get the data
+ * @return {Object}      The data attributes
+ */
 module.exports = function($el) {
   if ($el.hasAttributes()) {
     var i = 0,
@@ -103,9 +119,10 @@ module.exports = function($el) {
 }
 },{}],5:[function(require,module,exports){
 /**
- * Preload an image and call a callback onload
- * @param src The source of the image to load
- * @param callback The function to call when the image is loaded
+ * Preload an image and call a function onload
+ * @param  {String}   src      The source url to preload
+ * @param  {Object}   obj      An object to pass through for reference in the callback
+ * @param  {Function} callback The function to call when the image is done loading
  */
 var preloader = function(src, obj, callback) {
   var
@@ -132,13 +149,14 @@ module.exports = preloader;
 },{}],6:[function(require,module,exports){
 /**
  * Module to automatically swap image src's across css @media breakpoints
+ * @param  {Object} options Options for module
+ * @return {Object}         The SassQwatch object, for method chaining
  */
 module.exports = function(options) {
 
   // Dependencies
   var
     sassqwatch      = require('./sassqwatch'),
-    toDashed        = require('./toDashed'),
     elementify      = require('./elementify'),
     preloader       = require('./preloader'),
     extend          = require('./extend'),
@@ -153,8 +171,8 @@ module.exports = function(options) {
     i = 0;
 
   /**
-   * Store the image sources attached to each responsive image, making each check on mq change more effecient
-   * @param $image Which element to pull sizes from
+   * Stores the image sources attached to each responsive image, making each check on mq change more effecient
+   * @param  {Element} $image The element to receive the image sizes from
    */
   var storeSizes = function($image) {
     var
@@ -164,32 +182,32 @@ module.exports = function(options) {
         loaded: [],
         originalSrc: src,
         activeSrc: src
-      },
-      mqName;
+      };
 
-    extend(sizes, getData($image));
-
+    // merge the pre-existing sizes object with the object of image size urls
+    sizes = extend(sizes, getData($image));
+    // add the original src as a loaded src
     sizes.loaded.push(sizes.originalSrc);
-
-    // add the sizes for this image to the array
+    // add the sizes for this image to the known sizes
     knownSizes.push(sizes);
   };
 
   /**
-   * Return the current image source
-   * @param $image Which element to store the source on
+   * Returns the source url on an element
+   * @param  {Element} $el The element to get the source from
+   * @return {String}      The source URL
    */
-  var getSource = function ($image) {
+  var getSource = function ($el) {
     var src = '';
     // check if this the element is an img with a src
-    // or has a background image
-    if ($image.tagName == 'IMG') {
-      src = $image.getAttribute('src');
+    // or is another element with a background image
+    if ($el.tagName == 'IMG') {
+      src = $el.getAttribute('src');
     } else {
       // get the computed style of the element
-      src = getComputedStyle($image).getPropertyValue('background-image');
+      src = getComputedStyle($el).getPropertyValue('background-image');
       // get the html css collection if getComputedStyle doesn't work
-      src = src ? src : $image.style.backgroundImage;
+      src = src ? src : $el.style.backgroundImage;
       // remove the 'url()'
       src = src.replace(/^url\(['"]?/,'').replace(/['"]?\)$/,'');
     }
@@ -198,15 +216,15 @@ module.exports = function(options) {
   };
 
   /**
-   * Swap out either an <img>s source or the background image of another element.
-   * @param $target The jQuery element you want to swap an image on
-   * @param newImageSrc The source for the new image to use
+   * Swap out either an <img>s source or the background image of an element.
+   * @param  {Element} $el         The element that needs its source swapped
+   * @param  {String}  newImageSrc The new src to show
    */
-  var swapImage = function($target, newImageSrc) {
-    if ($target.tagName === 'IMG') {
-      $target.setAttribute('src', newImageSrc);
+  var swapImage = function($el, newImageSrc) {
+    if ($el.tagName === 'IMG') {
+      $el.setAttribute('src', newImageSrc);
     } else {
-      $target.style.backgroundImage = 'url(' + newImageSrc + ')';
+      $el.style.backgroundImage = 'url(' + newImageSrc + ')';
     }
   };
 
@@ -227,7 +245,6 @@ module.exports = function(options) {
 
   /**
    * Run through each responsive image and see if an image exists at that media query
-   * @param newMediaQuery [current] The new media query to load
    */
   var updateImages = function() {
     var
@@ -284,9 +301,7 @@ module.exports = function(options) {
           // preload the image to swap
           // and update the list of loaded src's
           preloader(newSource, thisImage, function(src, obj) {
-            // swap out the src on the first item in the waiting list
             swapImage(obj.$image, src);
-            // store this src as loaded
             obj.loaded.push(src);
           });
         }
@@ -316,32 +331,7 @@ module.exports = function(options) {
 
   return sassqwatch;
 };
-},{"./elementify":1,"./extend":2,"./getData":4,"./preloader":5,"./sassqwatch":"sassqwatch","./toDashed":7}],7:[function(require,module,exports){
-/**
- * Turns camelcase string into dashed
- * @param string The string to manipulate
- */
-module.exports = function(string) {
-  var
-    words = [],
-    currentChar = '',
-    currentWord = '',
-    i = 0;
-
-  for (i; string.length >= i; i++) {
-    currentChar = string.charAt(i);
-    
-    if ( currentChar === currentChar.toUpperCase() ) {
-      words.push(currentWord);
-      currentWord = currentChar.toLowerCase();
-    } else {
-      currentWord = currentWord + currentChar;
-    }
-  }
-  
-  return words.join('-');
-};
-},{}],"sassqwatch":[function(require,module,exports){
+},{"./elementify":1,"./extend":2,"./getData":4,"./preloader":5,"./sassqwatch":"sassqwatch"}],"sassqwatch":[function(require,module,exports){
 // Polyfills
 require('./forEach');
 
