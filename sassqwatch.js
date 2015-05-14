@@ -238,6 +238,8 @@ module.exports = function(options) {
     // if this is a retina screen and there is a retina src
     if (retina && imageObject[mediaQuery + '-2x']) {
       return imageObject[mediaQuery + '-2x'];
+    } else if (retina && imageObject['src-2x']) {
+      return imageObject['src-2x'];
     } else {
       return imageObject[mediaQuery];
     }
