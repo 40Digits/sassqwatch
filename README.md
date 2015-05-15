@@ -21,9 +21,11 @@ Requiring SassQwatch sets up the link to your Sass breakpoints then returns an o
 SassQwatch looks at the `font-family` property of the `head` element in your CSS to check for the current breakpoint. It needs to know the order of your breakpoints, so list them on `title`. Then set up your media queries with appropriate names:
 ```sass
 title {
-  font-family: 'mq-small, mq-medium, mq-large';
+  font-family: 'mq-tiny, mq-small, mq-medium, mq-large';
 }
 head {
+  font-family: 'mq-tiny';
+
   @media (min-width: 480px) {
     font-family: 'mq-small';
   }
