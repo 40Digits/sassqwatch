@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Responsive Images :: SassQwatch</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/min.css">
+</head>
+<body>
+
+  <nav class="page-menu">
+    <label class="menu-toggle-button" for="menu-toggle"></label>
+    <input type="checkbox" id="menu-toggle">
+    <ul class="menu">
+      <li><a href="/test/min-width.html">Min/Max - Min Width</a></li>
+      <li><a href="/test/max-width.html">Min/Max - Max Width</a></li>
+      <li><a href="/test/only.html">Only</a></li>
+      <li><a href="/test/responsive-images.html">Responsive Images</a></li>
+      <li><a href="/test/onChange.html">On Change</a></li>
+    </ul>
+  </nav>
+
+  <article class="page">
+
+    <header>
+      <h1 class="headline">.responsiveImages</h1>
+      <h2 class="subheadline">Using <strong>min-width</strong> breakpoints.</h2>
+    </header>
+
+    <section class="output">
+
+      <!-- Responsive Image -->
+      <img class="sassqwatch"
+        src="images/480x270.jpg"
+        data-mq-tiny-2x="images/480x270-retina.jpg"
+        data-mq-small="images/800x450.jpg"
+        data-mq-small-2x="images/800x450-retina.jpg"
+        data-mq-large="images/1024x575.jpg"
+        data-mq-large-2x="images/1024x575-retina.jpg" />
+
+      <div id="breakpoint-scale"></div>
+    </section>
+
+  </article>
+
+  <script src="../sassqwatch.min.js"></script>
+  <script src="js/scale.js"></script>
+  <script>
+  (function() {
+    var sassqwatch = require('sassqwatch');
+    
+    sassqwatch.responsiveImages();
+  })();
+  </script>
+</body>
+</html>

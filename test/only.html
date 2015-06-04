@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Only :: SassQwatch</title>
+
+	<link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/min.css">
+</head>
+<body>
+
+  <nav class="page-menu">
+    <label class="menu-toggle-button" for="menu-toggle"></label>
+    <input type="checkbox" id="menu-toggle">
+    <ul class="menu">
+      <li><a href="/test/min-width.html">Min/Max - Min Width</a></li>
+      <li><a href="/test/max-width.html">Min/Max - Max Width</a></li>
+      <li><a href="/test/only.html">Only</a></li>
+      <li><a href="/test/responsive-images.html">Responsive Images</a></li>
+      <li><a href="/test/onChange.html">On Change</a></li>
+    </ul>
+  </nav>
+
+	<article class="page">
+
+    <header>
+      <h1 class="headline">.only</h1>
+      <h2 class="subheadline">Using <strong>min-width</strong> breakpoints.</h2>
+    </header>
+
+    <section class="output">
+      <h3 id="log" class="subheadline">This callback fires <strong>only</strong> on mq-large</h3>
+      <div id="breakpoint-scale"></div>
+    </section>
+
+  </article>
+	
+	<script src="../sassqwatch.min.js"></script>
+  <script src="js/scale.js"></script>
+	<script>
+  (function(Scale) {
+    var sassqwatch  = require('sassqwatch'),
+        $log        = document.getElementById('log'),
+        mqLarge     = 'mq-large';
+
+    sassqwatch
+      .onChange(Scale.resetAffected)
+      .only(mqLarge, function() {
+        Scale.updateAffected(mqLarge);
+      });
+  })(window.Scale);
+  </script>
+</body>
+</html>

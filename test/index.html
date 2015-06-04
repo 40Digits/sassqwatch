@@ -3,15 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>SassQwatch</title>
-	<link rel="stylesheet" href="style.css">
+
+	<link rel="stylesheet" href="css/base.css">
 </head>
 <body>
 
-	<img class="responsive" src="images/480x270.jpg" data-mq-small="images/800x450.jpg" data-mq-small-2x="images/alt_800x424.jpg" data-mq-large="images/1024x575.jpg">
-
-  <img class="responsive" src="images/480x270.jpg" data-mq-small="images/800x450.jpg" data-mq-large="images/1024x575.jpg" data-mq-large-2x="images/alt_1024x543.jpg">
-	
-	<script src="../sassqwatch.min.js"></script>
-	<script src="test.js"></script>
+  <nav class="page-menu">
+    <label class="menu-toggle-button" for="menu-toggle"></label>
+    <input type="checkbox" id="menu-toggle">
+    <ul class="menu">
+      <li><a href="/test/min-width.html">Min/Max - Min Width</a></li>
+      <li><a href="/test/max-width.html">Min/Max - Max Width</a></li>
+      <li><a href="/test/only.html">Only</a></li>
+      <li><a href="/test/responsive-images.html">Responsive Images</a></li>
+      <li><a href="/test/onChange.html">On Change</a></li>
+    </ul>
+  </nav>
+  
 </body>
 </html>
