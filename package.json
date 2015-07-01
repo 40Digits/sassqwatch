@@ -1,6 +1,6 @@
 {
   "name": "sassqwatch",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "The Sass Query Watcher.",
   "repository": "https://github.com/40Digits/sassqwatch/",
   "main": "./lib/sassqwatch",
