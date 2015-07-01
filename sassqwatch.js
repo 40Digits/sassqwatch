@@ -400,43 +400,54 @@ var onChange = function(callback) {
 };
 
 /**
+ * Internal: Returns the correct query method (isAbove, isBelow, or matches) given a string
+ * @param  {String} type 'min', 'max', or 'only'
+ * @return {Function}    The method.
+ */
+var getQueryMethod = function(type) {
+  type = type.toLowerCase();
+
+  if (type === 'min') {
+    return isAbove;
+  } else if (type === 'max') {
+    return isBelow;
+  } else if (type === 'only') {
+    return matches;
+  } else {
+    return function() {
+      return false;
+    }
+  }
+};
+
+/**
  * Public: A CSS-like query function to check against a min or max breakpoint. For convenience you can also query on a specific breakpoint.
  * @param  {String}   type     "min", "max", or "only"
  * @param  {String}   which    The name of the media query to check against
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var query = function(type, which, callback) {
-  var check;
+var query = function(type, which, callback, fireOnce) {
+  var
+    firedCount = 0,
+    method = getQueryMethod(type),
+    check = function(newMediaQuery, oldMediaQuery) {
+      if (method(which)) {
+        // Prevent the callback from firing again
+        // if the condition was previously true
+        if (!!fireOnce && firedCount > 0) {
+          return false;
+        }
+        callback(newMediaQuery, oldMediaQuery);
+        firedCount++;
+      } else {
+        firedCount = 0;
+        return false;
+      }
+    };
 
-  switch (type.toLowerCase()) {
-    case 'min':
-      check = function(newMediaQuery) {
-        if (isAbove(which)) {
-          callback(newMediaQuery);
-        }
-      }
-      break;
-    case 'max':
-      check = function(newMediaQuery) {
-        if (isBelow(which)) {
-          callback(newMediaQuery);
-        }
-      }
-      break;
-    case 'only':
-      check = function(newMediaQuery, oldMediaQuery) {
-        if (matches(which)) {
-          callback(oldMediaQuery);
-        }
-      }
-      break;
-  }
-
-  if (typeof check === 'function') {
-    check(currentMediaQuery);
-    onChange(check);
-  }
+  check(currentMediaQuery, lastMediaQuery);
+  onChange(check);
 
   return this;
 };
@@ -447,8 +458,8 @@ var query = function(type, which, callback) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var min = function(which, callback) {
-  query('min', which, callback);
+var min = function(which, callback, fireOnce) {
+  query('min', which, callback, fireOnce);
   return this;
 };
 
@@ -458,8 +469,8 @@ var min = function(which, callback) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var max = function(which, callback) {
-  query('max', which, callback);
+var max = function(which, callback, fireOnce) {
+  query('max', which, callback, fireOnce);
   return this;
 };
 

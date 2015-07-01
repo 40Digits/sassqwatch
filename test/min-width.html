@@ -82,11 +82,11 @@
       .min(mqLarge, function(newMediaQuery) {
         $log.innerHTML = 'This breakpoint is within the <strong>minimum</strong> of ' +  mqLarge;
         Scale.updateAffectedMin(mqLarge);
-      })
+      }, true)
       .max(mqLarge, function(newMediaQuery) {
         $log.innerHTML = 'This breakpoint is withing the <strong>maximum</strong> ' +  mqLarge;
         Scale.updateAffectedMax(mqLarge);
-      });
+      }, true);
   })(window.Scale);
   </script>
 </body>

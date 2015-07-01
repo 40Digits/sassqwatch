@@ -78,46 +78,52 @@ sassqwatch.onChange(function (newMediaQuery, oldMediaQuery) {
 
 ## Methods
 
-#### min( breakpoint, callback )
+#### min( breakpoint, callback, fireOnce  )
 
 `breakpoint` (string): the name of the media query to check against
 
 `callback` (function): the callback function to call
+
+`fireOnce` (boolean): setting this to true will cause the callback to only be fired the first time the condition is met. (Default: `false`)
 
 A convenience method that functions similarly to a `min-width` media query in CSS. The callback is fired on the specified breakpoint as well as any breakpoint that is above it. The callback is provided the name of the current media query.
 
 ```javascript
-sassqwatch.min(mq-medium', function (newMediaQuery) {
+sassqwatch.min('mq-medium', function (newMediaQuery) {
   console.log('now min mq-medium');
-});
+}, true);
 ```
 
-#### max( breakpoint, callback )
+#### max( breakpoint, callback, fireOnce )
 
 `breakpoint` (string): the name of the media query to check against
 
 `callback` (function): the callback function to call
+
+`fireOnce` (boolean): setting this to true will cause the callback to only be fired the first time the condition is met. (Default: `false`)
 
 A convenience method that functions similarly to a `max-width` media query in CSS. The callback is fired on the specified breakpoint as well as any breakpoint that is below it. The callback is provided the name of the current media query.
 
 ```javascript
-sassqwatch.max(mq-medium', function (newMediaQuery) {
+sassqwatch.max('mq-medium', function (newMediaQuery) {
   console.log('now max mq-medium');
-});
+}, true);
 ```
 
-#### only( breakpoint, callback )
+#### only( breakpoint, callback, fireOnce )
 
 `breakpoint` (string): the name of the media query to check against
 
 `callback` (function): the callback function to call
 
+`fireOnce` (boolean): setting this to true will cause the callback to only be fired the first time the condition is met. (Default: `false`)
+
 A convenience method that fires a callback only on a specified breakpoint. The callback is provided the name of the previous media query.
 
 ```javascript
-sassqwatch.min(mq-medium', function (oldMediaQuery) {
+sassqwatch.min('mq-medium', function (oldMediaQuery) {
   console.log('now on mq-medium');
-});
+}, true);
 ```
 
 #### query( type, breakpoint, callback )
