@@ -1,0 +1,29 @@
+@media screen and (max-width: 479px) {
+  head {
+    font-family: "tiny"; } }
+@media screen and (min-width: 480px) {
+  head {
+    font-family: "mini"; } }
+@media screen and (min-width: 600px) {
+  head {
+    font-family: "small"; } }
+@media screen and (min-width: 768px) {
+  head {
+    font-family: "medium"; } }
+@media screen and (min-width: 960px) {
+  head {
+    font-family: "large"; } }
+@media screen and (min-width: 1220px) {
+  head {
+    font-family: "xlarge"; } }
+@media screen and (min-width: 1440px) {
+  head {
+    font-family: "xxlarge"; } }
+@media screen and (min-width: 1640px) {
+  head {
+    font-family: "xxxlarge"; } }
+
+title {
+  font-family: "tiny, mini, small, medium, large, xlarge, xxlarge, xxxlarge"; }
+
+/*# sourceMappingURL=style.css.map */

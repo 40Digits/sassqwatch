@@ -1,0 +1,70 @@
+//=================================
+// SassQwatch Media Queries
+//=================================
+
+//---------------------------------
+// Breakpoint Variables
+//---------------------------------
+$mq-mini:           480px;
+$mq-small:          600px;
+$mq-medium:         768px;
+$mq-large:          960px;
+$mq-xlarge:         1220px;
+$mq-xxlarge:        1440px;
+$mq-xxxlarge:       1640px;
+
+//---------------------------------
+// Breakpoint Map
+//---------------------------------
+$mq: (
+  'tiny'          : ( max-width: $mq-mini - 1 ),
+  'mini'          : ( min-width: $mq-mini ),
+  'small'         : ( min-width: $mq-small ),
+  'medium'        : ( min-width: $mq-medium ),
+  'large'         : ( min-width: $mq-large ),
+  'xlarge'        : ( min-width: $mq-xlarge ),
+  'xxlarge'       : ( min-width: $mq-xxlarge ),
+  'xxxlarge'      : ( min-width: $mq-xxxlarge )
+);
+
+//---------------------------------
+// Setup mixins
+//---------------------------------
+
+// Tells SassQwatch the names of our breakpoints
+@mixin expose-breakpoint-names($breakpoints) {
+  @each $breakpoint, $query in $breakpoints {
+    @media screen and #{inspect($query)} {
+      font-family: $breakpoint;
+    }
+  }
+}
+
+// Tells SassQwatch the order of our breakpoints
+@mixin expose-breakpoint-order($breakpoints) {
+  $length: length($breakpoints);
+  $list: '';
+  $i: 1;
+
+  @each $breakpoint, $query in $breakpoints {
+    $list: $list + $breakpoint;
+
+    @if $i != $length {
+      $list: $list + ', ';
+    }
+
+    $i: $i + 1;
+  }
+  font-family: $list;
+}
+
+//---------------------------------
+// Expose the breakpoints
+//---------------------------------
+head {
+  @include expose-breakpoint-names($mq);
+}
+
+title {
+  @include expose-breakpoint-order($mq);
+}
