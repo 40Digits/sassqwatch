@@ -121,7 +121,7 @@ sassqwatch.max('mq-medium', function (newMediaQuery) {
 A convenience method that fires a callback only on a specified breakpoint. The callback is provided the name of the previous media query.
 
 ```javascript
-sassqwatch.min('mq-medium', function (oldMediaQuery) {
+sassqwatch.only('mq-medium', function (oldMediaQuery) {
   console.log('now on mq-medium');
 }, true);
 ```
