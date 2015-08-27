@@ -1,17 +1,10 @@
-/*
-	gulpfile.js
-	===========
-	Rather than manage one giant configuration file responsible
-	for creating multiple tasks, each task has been broken out into
-	its own file in _gulp/tasks. Any files in that directory get
-	automatically required below.
+var gulp = require('gulp');
+var config = require('./_gulp/config.js');
+var concat = require('./_gulp/tasks/concat');
+var buildDist = require('./_gulp/tasks/build-dist');
+var watch = require('./_gulp/tasks/watch');
 
-	To add a new task, simply add a new task file that directory.
-	gulp/tasks/default.js specifies the default set of tasks to run
-	when you run `gulp`.
-*/
-
-var requireDir = require('require-dir');
-
-// Require all tasks in gulp/tasks, including subfolders
-requireDir('./_gulp/tasks', { recurse: true });
+gulp.task('concat', concat(gulp, config));
+gulp.task('build-dist', ['concat'], buildDist(gulp, config));
+gulp.task('watch', watch(gulp, config));
+gulp.task('default', ['build-dist', 'watch']);

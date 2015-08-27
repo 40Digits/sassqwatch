@@ -1,16 +1,10 @@
-var gulp       = require('gulp'),
-	watch      = require('../util/watch'),
-	config     = require('../config'),
-	gulpStart  = require('../util/gulpstart'),
-	livereload = require('gulp-livereload');
+var watch = require('../util/watch');
 
-gulp.task('watch', function () {
-	livereload({ start: true });
-	watch({
-		root: config.watch.src,
-		match: [{
-			when: 'js/**/*.+(js|ejs)',
-			then: gulpStart('browserify')
-		}]
-	});
-});
+module.exports = function (gulp, config) {
+  return function() {
+    return watch({
+      root: config.watch.base,
+      match: config.watch.match
+    });
+  };
+};
