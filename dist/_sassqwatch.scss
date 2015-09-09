@@ -3,68 +3,47 @@
 //=================================
 
 //---------------------------------
-// Breakpoint Variables
+// Breakpoints
 //---------------------------------
-$mq-mini:           480px;
-$mq-small:          600px;
-$mq-medium:         768px;
-$mq-large:          960px;
-$mq-xlarge:         1220px;
-$mq-xxlarge:        1440px;
-$mq-xxxlarge:       1640px;
-
-//---------------------------------
-// Breakpoint Map
-//---------------------------------
-$mq: (
-  'tiny'          : ( max-width: $mq-mini - 1 ),
-  'mini'          : ( min-width: $mq-mini ),
-  'small'         : ( min-width: $mq-small ),
-  'medium'        : ( min-width: $mq-medium ),
-  'large'         : ( min-width: $mq-large ),
-  'xlarge'        : ( min-width: $mq-xlarge ),
-  'xxlarge'       : ( min-width: $mq-xxlarge ),
-  'xxxlarge'      : ( min-width: $mq-xxxlarge )
+$breakpoints: (
+  tiny:          0,
+  mini:          480,
+  small:         600,
+  medium:        768,
+  large:         960,
+  xlarge:        1220,
+  xxlarge:       1440,
+  xxxlarge:      1640
 );
 
 //---------------------------------
 // Setup mixins
 //---------------------------------
 
-// Tells SassQwatch the names of our breakpoints
-@mixin expose-breakpoint-names($breakpoints) {
-  @each $breakpoint, $query in $breakpoints {
-    @media screen and #{inspect($query)} {
-      font-family: $breakpoint;
-    }
-  }
-}
-
-// Tells SassQwatch the order of our breakpoints
-@mixin expose-breakpoint-order($breakpoints) {
+// Exposes the breakpoints to SassQwatch in JSON format
+@mixin expose-breakpoints($breakpoints) {
   $length: length($breakpoints);
-  $list: '';
+  $data: '{';
   $i: 1;
 
-  @each $breakpoint, $query in $breakpoints {
-    $list: $list + $breakpoint;
+  @each $breakpoint, $value in $breakpoints {
+    $data: $data + $breakpoint + ':' + $value;
 
     @if $i != $length {
-      $list: $list + ', ';
+      $data: $data + ', ';
     }
 
     $i: $i + 1;
   }
-  font-family: $list;
+  
+  $data: $data + '}';
+
+  font-family: $data;
 }
 
 //---------------------------------
 // Expose the breakpoints
 //---------------------------------
 head {
-  @include expose-breakpoint-names($mq);
-}
-
-title {
-  @include expose-breakpoint-order($mq);
+  @include expose-breakpoint-names($breakpoints);
 }
