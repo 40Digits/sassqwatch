@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<!--[if lte IE 9]><html class="no-js lt-ie10"><![endif]-->
+<!--[if gt IE 9]><!--><html class="no-js"><!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SassQwatch</title>
+  <link rel="stylesheet" href="/assets/style.css" media="screen">
+  <script src="//use.typekit.net/cln1lwa.js"></script>
+  <script>try{Typekit.load({ async: true });}catch(e){}</script>
+</head>
+
+<body>
+  <header class="c-site-header">
+    <div class="o-wrapper--standard">
+      <div class="c-site-header__title">
+        <i class="c-site-title__logo c-logo"></i><span class="c-site-title__text c-headline--medium c-headline--strong">SassQwatch</span>
+      </div>
+      <nav class="c-site-nav" role="navigation">
+        <ul class="c-site-nav__menu">
+          <li class="c-site-nav__item"><a href="#demo">Demo</a></li>
+          <li class="c-site-nav__item"><a href="#setup">Setup</a></li>
+          <li class="c-site-nav__item"><a href="#api">API</a></li>
+          <li class="c-site-nav__item c-site-nav__item--button"><a href="https://github.com/40Digits/sassqwatch" class="c-button c-button--active">GitHub</a></li>
+          <li class="c-site-nav__item c-site-nav__item--button"><a href="https://www.npmjs.com/package/sassqwatch" class="c-button c-button--active">NPM</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main">
+
+    <!-- HERO -->
+    <header class="c-hero">
+      <div class="o-wrapper--small">
+        <i class="c-angle c-angle--left"></i>
+        <h1 class="c-hero__title c-headline--xlarge">SassQwatch</h1>
+        <p class="c-headline--medium">The Sass Query Watcher.</p>
+        <div class="c-hero__buttons">
+          <a href="https://github.com/40Digits/sassqwatch" class="c-button c-button--active c-button--large">GitHub</a>
+          <a href="https://www.npmjs.com/package/sassqwatch" class="c-button c-button--active c-button--large">NPM</a>
+        </div>
+        <i class="c-angle c-angle--right"></i>
+      </div>
+    </header>
+
+    <!-- INTRO -->
+    <section class="c-section">
+      <div class="o-wrapper--standard">
+        <div class="c-intro o-row--xpad@medium u-cf">
+          <div class="o-block o-block--third@medium">
+            <h2 class="c-intro__headline">Sass &#x203A;&#x203A; Javascript</h2>
+            <p>We often use Sass to setup breakpoint variables for solid responsive designs. But our designs become fractured when we start hard-coding breakpoint values in our Javascript. SassQwatch links up your Sass and your JS for truly seemless responsive development.</p>
+          </div>
+          <div class="o-block o-block--third@medium">
+            <h2 class="c-intro__headline">Super Helpful Methods</h2>
+            <p>SassQwatch has a bunch of really handy methods that help you write Javascript in a similar way to writing media queries in CSS. Check out the <a href="#api" class="c-link">API</a> docs below for a full list of what SassQwatch can do.</p>
+          </div>
+          <div class="o-block o-block--third@medium">
+            <h2 class="c-intro__headline">Responsive Images</h2>
+            <p>There is nothing more expensive for a browser than trying to download massive images. SassQwatch offers an elegant way of serving up appropriate image sizes that are synced up with your breakpoints. Checkout out the demo below.</p>
+          </div>
+        </div>
+        <div class="o-row--xpad@medium u-cf">
+          <div class="o-block o-block--half@medium">
+            <h3 class="c-headline--large c-headline--strong">Sass/SCSS</h3>
+            <pre>
+<code class="sass">$breakpoints: (
+  small:    480px,
+  medium:   768px,
+  large:    1024px
+);</code>
+            </pre>
+          </div>
+          <div class="o-block o-block--half@medium">
+            <h3 class="c-headline--large c-headline--strong">Javascript</h3>
+            <div class="c-code">
+              <pre>
+<code>var sassqwatch = require(&apos;sassqwatch&apos;);
+
+sassqwatch.min(&apos;medium&apos;, function() {
+  console.log(&apos;This is above &quot;medium&quot;!&apos;);
+});</code>
+              </pre>
+          </div>
+        </div>
+      </div>
+    </div></section>
+
+    <!-- DEMO -->
+    <section class="c-demo c-section--light-gray" id="demo"></section>
+
+    <!-- SETUP -->
+    <section class="c-section o-wrapper--standard" id="setup">
+      <div class="o-wrapper--standard">
+        <header>
+          <h1 class="c-section__headline c-headline--large c-headline--strong">Setup</h1>
+        </header>
+        <p class="c-type-standard">You have two options. If you&apos;re already using NPM and Browserify, just <code>npm install</code> it and require it in your modules. If you&apos;re developing the old fashioned way, download the file from the repo and include it in the bottom of your document. In order to use it at that point you need to <code>require</code> it using CommonJS syntax.</p>
+        <div class="o-row--xpad@medium u-cf">
+          <div class="o-block o-block--half@medium">
+            <h3 class="c-headline--large c-headline--strong">NPM &amp; Browserify</h3>
+            <p><em>Command Line</em></p>
+            <pre>
+              <code>npm install --save sassqwatch</code>
+            </pre>
+            <p><em>Javascript</em></p>
+            <pre>
+<code class="javascript">var sassqwatch = require(&apos;sassqwatch&apos;);
+sassqwatch.onChange(doSomethingSweet);</code>
+            </pre>
+          </div>
+          <div class="o-block o-block--half@medium">
+            <h3 class="c-headline--large c-headline--strong">Manual</h3>
+            <p><em>Download the script from the <a href="https://github.com/40Digits/sassqwatch" class="c-link">SassQwatch repo</a></em></p>
+            <pre>
+<code class="html">&lt;script src=&quot;js/sassqwatch.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  var sassqwatch = require(&apos;sassqwatch&apos;);
+  sassqwatch.onChange(doSomethingSweet);
+&lt;/script&gt;</code>
+            </pre>
+          </div>
+        </div>
+        <p class="c-type-standard">Then setup your SCSS, Sass, LESS, or plain ole CSS to expose the breakpoints. We have provided a <a href="https://github.com/40Digits/sassqwatch/blob/master/dist/_sassqwatch.scss" class="c-link">SassQwatch mixin</a> to help you set everything up. Basically SassQwatch listens for media query changes on the <code>head</code> element, so you need to create a media queries for each breakpoint on that element and expose the name on the <code>font-family</code> property. Then on the <code>font-family</code> property of the <code>title</code> element you need to setup of a list of the breakpoints in order.</p>
+        <pre>
+<code class="css">@media screen and (max-width: 479px) {
+  head {
+    font-family: &quot;tiny&quot;;
+  }
+}
+@media screen and (min-width: 480px) {
+  head {
+    font-family: &quot;mini&quot;;
+  }
+}
+@media screen and (min-width: 600px) {
+  head {
+    font-family: &quot;small&quot;;
+  }
+}
+@media screen and (min-width: 768px) {
+  head {
+    font-family: &quot;medium&quot;;
+  }
+}
+@media screen and (min-width: 960px) {
+  head {
+    font-family: &quot;large&quot;;
+  }
+}
+ 
+title {
+  font-family: &quot;tiny, mini, small, medium, large&quot;;
+}</code>
+        </pre>
+      </div>
+    </section>
+
+    <!-- API -->
+    <section class="c-section o-wrapper--standard" id="api">
+      <div class="o-wrapper--standard">
+        <header class="c-api__header">
+          <h1 class="c-section__headline c-headline--large c-headline--strong">API</h1>
+          <small class="u-text-orange"><i class="symbol s-link"></i> indicates a chainable method</small>
+        </header>
+
+        <div id="api-sections">          <!-- API:properties -->
+          <h2 class="c-section__subheadline c-headline--large">properties</h2>
+
+          
+          <article class="c-api__item ">
+            <h4 class="c-api__headline">.breakpoints</h4>
+            
+            
+            <p class="c-type-standard">An array of the names of the breakpoints in order.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">console.log(sassqwatch.breakpoints);
+// [&apos;mq-mini&apos;, &apos;mq-small&apos;, &apos;mq-medium&apos;, &apos;mq-large&apos;, &apos;mq-xlarge&apos;]&apos;</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item ">
+            <h4 class="c-api__headline">.current</h4>
+            
+            
+            <p class="c-type-standard">The name of the current breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">console.log(sassqwatch.current);
+// mq-xlarge</code>
+              </pre>
+            </div>
+          </article>
+                    <!-- API:methods -->
+          <h2 class="c-section__subheadline c-headline--large">methods</h2>
+
+          
+          <article class="c-api__item s-is-chainable ">
+            <h4 class="c-api__headline">.onChange( callback )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>callback (function)</strong>: the callback function to call when the breakpoint changes</li>
+            
+            </ul>
+            <p class="c-type-standard">Fires a callback on every breakpoint change. The callback is provided the name of the new breakpoint and the name of the previous breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">sassqwatch.onChange(function (newBreakpoint, oldBreakpoint) {
+  console.log(&apos;breakpoint switched to &apos; + newBreakpoint + &apos; from &apos; + oldBreakpoint);
+});</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item s-is-chainable ">
+            <h4 class="c-api__headline">.min( breakpoint, callback, fireOnce )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the name of the breakpoint to check against</li><li class="c-list__item"><strong>callback (function)</strong>: the callback function to call</li><li class="c-list__item"><strong>fireOnce (boolean)</strong>: causes the callback to only be fired the first time the condition is met. If set to false the callback will be fired on every breakpoint change where the condition is met. (Default: true)</li>
+            
+            </ul>
+            <p class="c-type-standard">A convenience method that functions similarly to a `min-width` breakpoint in CSS. The callback is fired on the specified breakpoint as well as any breakpoint that is above it. The callback is provided the name of the new breakpoint and the name of the previous breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">sassqwatch.min(&apos;mq-medium&apos;, function (newBreakpoint, oldBreakpoint) {
+  console.log(&apos;now min mq-medium&apos;);
+});</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item s-is-chainable ">
+            <h4 class="c-api__headline">.max( breakpoint, callback, fireOnce )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the name of the breakpoint to check against</li><li class="c-list__item"><strong>callback (function)</strong>: the callback function to call</li><li class="c-list__item"><strong>fireOnce (boolean)</strong>: causes the callback to only be fired the first time the condition is met. If set to false the callback will be fired on every breakpoint change where the condition is met. (Default: true)</li>
+            
+            </ul>
+            <p class="c-type-standard">A convenience method that functions similarly to a `max-width` breakpoint in CSS. The callback is fired on any breakpoint that is below it and is not inclusive. The callback is provided the name of the new breakpoint and the name of the previous breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">sassqwatch.max(&apos;mq-medium&apos;, function (newBreakpoint, oldBreakpoint) {
+  console.log(&apos;now max mq-medium&apos;);
+}, false);</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item s-is-chainable ">
+            <h4 class="c-api__headline">.only( breakpoint, callback )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the name of the breakpoint to check against</li><li class="c-list__item"><strong>callback (function)</strong>: the callback function to call</li>
+            
+            </ul>
+            <p class="c-type-standard">A convenience method that fires a callback only on a specified breakpoint. The callback is provided the name of the previous breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">sassqwatch.only(&apos;mq-medium&apos;, function (oldBreakpoint) {
+  console.log(&apos;now on mq-medium&apos;);
+});</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item s-is-chainable ">
+            <h4 class="c-api__headline">.query( type, breakpoint, callback, fireOnce )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>type (string)</strong>: &quot;min&quot;, &quot;max&quot;, or &quot;only&quot;</li><li class="c-list__item"><strong>breakpoint (string)</strong>: the name of the breakpoint to check against</li><li class="c-list__item"><strong>callback (function)</strong>: the callback function to call</li><li class="c-list__item"><strong>fireOnce (boolean)</strong>: causes the callback to only be fired the first time the condition is met. If set to false the callback will be fired on every breakpoint change where the condition is met. Only applies to &apos;min&apos; and &apos;max&apos; types. (Default: true)</li>
+            
+            </ul>
+            <p class="c-type-standard">Fires a callback when the current breakpoint is min, max, or only the specified breakpoint. If checking for &quot;min&quot; or &quot;max&quot; then the callback receives the name of the new breakpoint. If checking for &quot;only&quot; the callback receives the name of the old breakpoint.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">sassqwatch
+  .query(&apos;min&apos;, &apos;mq-medium&apos;, function (newBreakpoint, oldBreakpoint) {
+    console.log(&apos;now min mq-medium&apos;);
+  })
+  .query(&apos;only&apos;, &apos;mq-xxlarge&apos;, function (oldBreakpoint) {
+    console.log(&apos;now on mq-xxlarge&apos;);
+  });</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item ">
+            <h4 class="c-api__headline">.isBelow( breakpoint, inclusive )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the breakpoint to check against</li><li class="c-list__item"><strong>inclusive (boolean)</strong>: whether or not to include the breakpoint in the check; &lt;= instead of &lt;. (Default: false)</li>
+            
+            </ul>
+            <p class="c-type-standard">Returns `true` if the current breakpoint is below a specified breakpoint, and `false` otherwise.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">if ( sassqwatch.isBelow(&apos;mq-large&apos;) ) {
+  console.log(&apos;breakpoint is below mq-large.&apos;);
+}</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item ">
+            <h4 class="c-api__headline">.isAbove( breakpoint, inclusive )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the breakpoint to check against</li><li class="c-list__item"><strong>inclusive (boolean)</strong>: whether or not to include the breakpoint in the check; &gt;= instead of &gt;. (Default: true)</li>
+            
+            </ul>
+            <p class="c-type-standard">Returns `true` if the current breakpoint is above a specified breakpoint, and `false` otherwise.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">if ( sassqwatch.isAbove(&apos;mq-large&apos;) ) {
+  console.log(&apos;breakpoint is above mq-large.&apos;);
+}</code>
+              </pre>
+            </div>
+          </article>
+          
+          <article class="c-api__item ">
+            <h4 class="c-api__headline">.matches( breakpoint )</h4>
+            
+              <ul class="o-ui-list c-list--standard">
+                <li class="c-list__item"><strong>breakpoint (string)</strong>: the breakpoint to check against</li>
+            
+            </ul>
+            <p class="c-type-standard">Returns `true` if the current media query matches a specified media query, and `false` otherwise.</p>
+            <div class="c-code">
+              <pre>
+<code class="javascript">if ( sassqwatch.matches(&apos;mq-large&apos;) ) {
+  console.log(&apos;breakpoint is mq-large.&apos;);
+}</code>
+              </pre>
+            </div>
+          </article>
+          </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="c-site-footer c-section--light-gray">
+    <div class="o-wrapper--standard u-cf">
+      <p class="c-site-footer__text"><a href="http://www.40digits.com"><i class="c-sprite--logo-40d"></i></a>A <a href="http://www.40digits.com">40Digits</a> project.</p>
+      <p class="c-site-footer__text">&#xA9; 2015 40Digits</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/JSXTransformer.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+//=================================
+// SASSQWATCH SETUP
+//=================================
+@if $sassqwatch {
+  $bp-count: length($breakpoints);
+
+  head {
+    $i: 0;
+    
+    @each $name, $value in $breakpoints {
+      // attach a media query for this breakpoint to expose the name
+      @include mq($name) {
+        font-family: $name;
+      }
+    }
+  }
+  
+  title {
+    $bp-order: '';
+    $i: 0;
+    // expose the order of the breakpoints
+    @each $name, $value in $breakpoints {
+      $i: $i + 1;
+      $bp-order: $bp-order + $name;
+      
+      @if $i != $bp-count {
+        $bp-order: $bp-order + ', ';
+      }
+    }
+    font-family: $bp-order;
+  }
+}

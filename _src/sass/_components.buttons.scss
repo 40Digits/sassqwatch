@@ -1,0 +1,55 @@
+//=================================
+// COMPONENT - BUTTONS
+//=================================
+.c-button {
+  display: inline-block;
+  padding: 0.4em 1.5em;
+  margin: 0 $gutter;
+  border-bottom-width: 0.2em;
+  border-bottom-style: solid;
+
+  &:first-of-type {
+    margin-left: 0;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+  &:hover,
+  &.js-is-active {
+    top: 0.2em;
+    border-bottom-width: 0;
+  }
+}
+
+.c-button--active:hover,
+.c-button--default:hover {
+  color: get-color(white);
+}
+
+.c-button--active {
+  background: get-color(orange);
+  color: get-color(white);
+  border-bottom-color: get-color(orange, medium);
+}
+
+.c-button--default {
+  background: get-color(teal);
+  color: get-color(white);
+  border-bottom-color: get-color(teal, medium);
+  font-weight: get-font-weight(bold);
+
+  &.js-is-active {
+    @extend .c-button--active;
+  }
+}
+
+.c-button--small {
+  font-size: 13px;
+}
+
+.c-button--large {
+  font-size: 20px;
+  font-weight: get-font-weight(bold);
+}

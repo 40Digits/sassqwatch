@@ -32,3 +32,40 @@ exports.watch = {
     }
   ]
 };
+
+exports.eta = {
+  scaffold: {
+    assets: {
+      styles: ''
+    }
+  },
+  globs: {
+    scripts: '**/*.+(js|ejs|jsx)'
+  },
+  browserify: {
+    transform: ['reactify', 'browserify-shim']
+  },
+  browserSync: {
+    settings: {
+      files: [
+        './**/*.html'
+      ]
+    }
+  },
+  sprites: {
+    destSass: './_src/sass/',
+    settings: {
+      style: '_components.sprites.scss',
+      cssPath: 'images/sprites/',
+      margin: 5
+    }
+  },
+  symbols: {
+    destSass: './_src/sass/',
+    fontPath: '/assets/fonts/symbols/',
+    renameSass: {
+      basename: '_components.symbols',
+      extname: '.scss'
+    }
+  }
+}

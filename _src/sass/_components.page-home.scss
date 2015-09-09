@@ -1,0 +1,36 @@
+//=================================
+// COMPONENT - HOMEPAGE
+//=================================
+.c-intro {
+  margin-bottom: 50px;
+}
+
+.c-intro__headline {
+  @extend .c-headline--medium;
+  @extend .c-headline--strong;
+}
+
+.c-api__header {
+  margin-bottom: 30px;
+}
+
+.c-api__item {
+  margin-bottom: 20px;
+  @include mq(small) {
+    margin-bottom: 50px;
+  }
+
+  &.s-is-chainable {
+    .c-api__headline:after {
+      @include symbols(link);
+      margin-left: 1em;
+      font-size: 14px;
+    }
+  }
+}
+
+.c-api__headline {
+  @extend .c-headline--medium;
+  @extend .c-headline--strong;
+  @extend .u-text-orange;
+}

@@ -1,0 +1,112 @@
+//=================================
+// COMPONENT - GLOBAL
+//=================================
+.c-site-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  z-index: z(header);
+  background: get-color(white);
+  box-shadow: 2px 0 2px rgba(get-color(gray, dark), 0.2);
+}
+
+.c-site-header__title {
+  float: left;
+}
+
+.c-site-nav {
+  float: right;
+}
+
+.c-site-title__logo {
+  @extend .sprite-main;
+  @include sprite($logo-small);
+  display: inline-block;
+  float: left;
+  margin-right: $gutter;
+  vertical-align: middle;
+
+  @include mq(small) {
+    @include sprite($logo);
+  }
+
+  .is-small & {
+    @include sprite($logo-small);
+  }
+}
+
+.c-site-title__logo,
+.c-site-title__text,
+.c-site-nav__item {
+  line-height: nth($logo-small, 4); // the height of the logo
+  @include mq(small) {
+    line-height: nth($logo, 4); // the height of the logo
+  }
+}
+
+.c-site-title__text {
+  display: none;
+  @include mq(medium) {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .is-small & {
+    @extend .u-hidden;
+  }
+}
+
+.c-site-nav__menu {
+  list-style: none;
+}
+
+.c-site-nav__item {
+  display: none;
+  margin: 0 10px;
+  font-weight: get-font-weight(bold);
+  text-transform: uppercase;
+  @include mq(small) {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.c-site-nav__item--button {
+  margin: 0 5px;
+  font-size: 14px;
+  display: inline-block;
+  @include mq(medium) {
+    font-size: 16px;
+  }
+
+  .c-button {
+    line-height: $line-standard;
+  }
+}
+
+.c-site-footer {
+  padding: 15px 0;
+}
+
+.c-site-footer__text {
+  font-size: 13px;
+  font-weight: get-font-weight(bold);
+
+  &:first-child {
+    float: left;
+  }
+
+  &:last-child {
+    float: right;
+    line-height: nth($logo-40d, 4); // the height of the 40d logo
+  }
+}
+
+.c-sprite--logo-40d {
+  @extend .sprite-main;
+  @include sprite($logo-40d);
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+}

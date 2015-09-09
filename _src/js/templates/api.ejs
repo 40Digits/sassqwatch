@@ -1,0 +1,19 @@
+          <!-- API:<%= title %> -->
+          <h2 class="c-section__subheadline c-headline--large"><%= title %></h2>
+
+          <% items.forEach(function(item) { %>
+          <article class="c-api__item <% if (item.chainable) { %>s-is-chainable <% } %>">
+            <h4 class="c-api__headline"><%= item.title %></h4>
+            <% if (item.params) { %>
+              <ul class="o-ui-list c-list--standard">
+                <% item.params.forEach(function(param) { %><li class="c-list__item"><strong><%= param.title %></strong>: <%= param.description %></li><% } );%>
+            <% } %>
+            </ul>
+            <p class="c-type-standard"><%= item.description %></p>
+            <div class="c-code">
+              <pre>
+<code class="javascript"><%- item.example %></code>
+              </pre>
+            </div>
+          </article>
+          <% }); %>

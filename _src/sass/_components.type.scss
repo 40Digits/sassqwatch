@@ -1,0 +1,97 @@
+//=================================
+// COMPONENT - TYPE
+//=================================
+
+//---------------------------------
+// Headline Sizing
+//---------------------------------
+@mixin headline-small {
+  margin-bottom: 0.2em;
+  font-size: rem(19px);
+}
+
+@mixin headline-medium {
+  font-size: rem(24px);
+  line-height: $line-standard;
+}
+
+@mixin headline-large {
+  font-size: rem(33px);
+  line-height: $line-medium;
+}
+
+@mixin headline-xlarge {
+  font-size: rem(64px);
+  line-height: $line-short;
+}
+
+.c-headline--small {
+  @include headline-small;
+}
+
+.c-headline--medium {
+  @include headline-small;
+  font-weight: get-font-weight(light);
+  line-height: $line-standard;
+  @include mq(medium) {
+    @include headline-medium;
+  }
+}
+
+.c-headline--large {
+  @include headline-medium;
+  font-weight: get-font-weight(light);
+  @include mq(medium) {
+    @include headline-large;
+  }
+}
+
+.c-headline--xlarge {
+  @include headline-large;
+  font-weight: get-font-weight(bold);
+  @include mq(medium) {
+    @include headline-xlarge;
+  }
+}
+
+.c-headline--strong {
+  font-weight: get-font-weight(bold);
+}
+
+//---------------------------------
+// Paragraph Sizing
+//---------------------------------
+.c-type-standard {
+  margin-bottom: 20px;
+  font-size: 1em;
+  line-height: $line-medium;
+}
+
+.c-type-large {
+  font-size: 1.0625em;
+  line-height: $line-medium;
+  @include mq(large) {
+    font-size: 1.25em;
+  }
+}
+
+.c-link {
+  color: get-color(teal);
+  font-weight: get-font-weight(bold);
+  text-decoration: underline;
+  &:hover {
+    color: get-color(teal, medium);
+  }
+}
+
+//---------------------------------
+// Lists
+//---------------------------------
+.c-list--standard {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.c-list__item {
+  line-height: $line-medium;
+}

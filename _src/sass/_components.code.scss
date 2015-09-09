@@ -1,0 +1,110 @@
+//=================================
+// COMPONENT - CODE BLOCKS
+//=================================
+
+/* Tomorrow Night Eighties Theme */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+pre code {
+  display: block;
+  margin-bottom: 20px;
+  padding: 10px $gutter-large;
+  border-radius: 4px;
+  background: get-color(code, background);
+  color: get-color(code, text);
+  font-family: Menlo, Monaco, Consolas, monospace;
+  font-weight: get-font-weight(semibold);
+  line-height: $line-medium;
+  white-space: pre;
+}
+
+.tomorrow-comment {
+  color: get-color(code, comment);
+}
+.tomorrow-red {
+  color: get-color(code, red);
+}
+.tomorrow-orange {
+  color: get-color(code, orange);
+}
+.tomorrow-yellow {
+  color: get-color(code, yellow);
+}
+.tomorrow-green {
+  color: get-color(code, green);
+}
+.tomorrow-aqua {
+  color: get-color(code, aqua);
+}
+.tomorrow-blue {
+  color: get-color(code, blue);
+}
+.tomorrow-purple {
+  color: get-color(code, purple);
+}
+
+pre {
+  .comment,
+  .title {
+    color: get-color(code, comment);
+  }
+
+  .variable,
+  .attribute,
+  .tag,
+  .regexp,
+  .ruby .constant,
+  .xml .tag .title,
+  .xml .pi,
+  .xml .doctype,
+  .html .doctype,
+  .css .id,
+  .css .class,
+  .css .pseudo {
+    color: get-color(code, red);
+  }
+
+  .number,
+  .preprocessor,
+  .built_in,
+  .literal,
+  .params,
+  .constant {
+    color: get-color(code, orange);
+  }
+
+  .class,
+  .ruby .class .title,
+  .css .rules .attribute {
+    color: get-color(code, yellow);
+  }
+
+  .string,
+  .value,
+  .inheritance,
+  .header,
+  .ruby .symbol,
+  .xml .cdata {
+    color: get-color(code, green);
+  }
+
+  .css .hexcolor {
+    color: get-color(code, aqua);
+  }
+
+  .function,
+  .python .decorator,
+  .python .title,
+  .ruby .function .title,
+  .ruby .title .keyword,
+  .perl .sub,
+  .javascript .title,
+  .coffeescript .title {
+    color: get-color(code, blue);
+  }
+
+  .keyword,
+  .javascript .function {
+    color: get-color(code, purple);
+  }
+}

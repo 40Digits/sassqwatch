@@ -1,0 +1,173 @@
+//=================================
+// SETTINGS - VARIABLES
+//=================================
+
+
+//---------------------------------
+// Config Switching
+//---------------------------------
+$global-font-smoothing:    true !default;
+$tap-highlight:            false !default;
+$print-media:              false !default;
+$sassqwatch:               true !default;
+
+
+//---------------------------------
+// Root Font Sizing
+//---------------------------------
+
+// <html> and <body> font sizes
+$html-font-size: 62.5%;
+$body-font-size: 16px;
+$em-base: 16;
+
+// Multiplier for REM Mixin
+// It needs to stay the same size as <html> font size, but in pixels
+$base-font-size: 10px !default;
+
+// Whether to output fallback values in px when outputting rems.
+$rem-with-px-fallback: false !default;
+
+
+//---------------------------------
+// General
+//---------------------------------
+
+// Gutter
+$gutter:            10px;
+$gutter-large:      20px;
+
+// Rows Max-Width
+$wrapper:           1020px;
+$wrapper-small:     680px;
+$wrapper-medium:    980px;
+$wrapper-large:     1440px;
+
+// Animation
+$cubic:             cubic-bezier(0.63, 0.64, 0.3, 1);
+$timing:            500ms;
+$timing-fast:       350ms;
+
+// Line Heights
+$line-short:        1.1;
+$line-standard:     1.25;
+$line-medium:       1.5;
+$line-tall:         2;
+
+
+//---------------------------------
+// Colors
+//---------------------------------
+
+$colors: (
+  black: #3f3e44,
+  white: #fff,
+  orange: (
+    base: #ef5b30,
+    medium: #d7542e
+  ),
+  teal: (
+    base: #6bd2c1,
+    medium: #63beaf
+  ),
+  gray: (
+    base: #999,
+    light: #eee,
+    medium: #ccc,
+    dark: #333
+  ),
+  code: (
+    background: #2d2d2d,
+    text: #ccc,
+    comment: #999999,
+    yellow: #ffcc66,
+    red: #f2777a,
+    orange: #f99157,
+    green: #99cc99,
+    aqua: #66cccc,
+    blue: #6699cc,
+    purple: #cc99cc
+  )
+);
+
+
+//---------------------------------
+// Fonts
+//---------------------------------
+
+$weights: (
+  thin:             100,
+  xlight:           200,
+  light:            300,
+  normal:           400,
+  medium:           500,
+  semibold:         600,
+  bold:             700,
+  heavy:            800,
+  black:            900
+);
+
+// @import url("http://hello.myfonts.net/count/2b0ad4");
+
+
+// Custom font families that need to be included
+// @font-face {
+//  font-family: 'Font Family';
+//  src:url('assets/fonts/font-folder-name/font-file.eot');
+//  src:url('assets/fonts/font-folder-name/font-file.eot?#iefix') format('embedded-opentype'),
+//    url('assets/fonts/font-folder-name/font-file.woff') format('woff'),
+//    url('assets/fonts/font-folder-name/font-file.ttf') format('truetype');
+//  font-weight: map-get(normal);
+// }
+
+
+ // Font stacks need to be wrapped in quotes
+ // or else there will be error due to the commas.
+ // The get-font-stack function handles unquoting them,
+ // but if you're going to get these values manually
+ // make sure to use the unquote() function.
+$fonts: (
+  default: '"Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif',
+  proxima: '"proxima-nova", sans-serif',
+  fonttwo: (
+    regular: '"Font Family", sans-serif',
+    light: '"Font Family Light", sans-serif',
+    bold: '"Font Family Bold", sans-serif'
+  )
+);
+
+
+//---------------------------------
+// Breakpoints
+//---------------------------------
+
+$breakpoints: (
+  tiny:             0px,
+  mini:             480px,
+  small:            600px,
+  medium:           768px,
+  large:            960px,
+  xlarge:           1220px,
+  xxlarge:          1440px,
+  xxxlarge:         1640px
+);
+
+//---------------------------------
+// Z-Index
+//---------------------------------
+
+/**
+ * http://www.sitepoint.com/better-solution-managing-z-index-sass/
+ * http://viget.com/extend/sass-maps-and-z-indexes
+ */
+$z-layers: (
+  pit:              -1,
+  default:          1,
+  footer:           5,
+  header:           10,
+  nav:              20,
+  announce:         30,
+  modal:            40,
+  overlay:          50,
+  browsehappy:      60
+);

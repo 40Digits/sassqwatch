@@ -1,0 +1,29 @@
+//=================================
+// COMPONENT - SPRITES
+//=================================
+@mixin section-padding {
+  padding: 60px 0;
+}
+
+.c-section {
+  @include section-padding;
+}
+
+.c-section--light-gray {
+  background: get-color(gray, light);
+}
+
+.c-section__headline {
+  margin-bottom: 30px;
+
+  &:after {
+    content: "";
+    display: block;
+    width: 90px;
+    border-bottom: 2px solid get-color(black);
+  }
+}
+
+.c-section__subheadline {
+  margin-bottom: 20px;
+}
