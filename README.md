@@ -145,40 +145,6 @@ sassqwatch.query('only', 'mq-xxlarge', function (oldMediaQuery) {
 });
 ```
 
-#### fetchMediaQuery()
-
-Manually returns the current media query.
-
-```javascript
-var thisBreakpoint = sassqwatch.fetchMediaQuery();
-```
-
-#### fetchMqName( index )
-`index` (number): the index of the media query to return
-
-Returns a string of the name of the requested media query from the ordered array of media queries.
-
-```javascript
-var i = something.length;
-var breakpoint;
-
-for (i; i > 0; i--) {
-  breakpoint = sassqwatch.fetchMqName(i);
-  // breakpoint = 'mq-xxlarge' (etc)
-}
-```
-
-#### fetchMqIndex( breakpoint )
-`breakpoint` (string): the name of the media query to return
-
-Returns an integer of the index of the requested media query from the ordered array of media queries.
-
-```javascript
-sassqwatch.onChange(function (newMediaQuery, oldMediaQuery) {
-  var breakpointIndex = sassqwatch.fetchMqIndex(newMediaQuery);
-});
-```
-
 #### isBelow( breakpoint )
 `breakpoint` (string): the media query to check against.
 

@@ -18,6 +18,7 @@ module.exports = function(el) {
     return el;
   }
 };
+
 },{}],2:[function(require,module,exports){
 /**
  * Returns a new merged object from two objects
@@ -33,6 +34,7 @@ module.exports = function(obj1, obj2) {
   }
   return obj1;
 }
+
 },{}],3:[function(require,module,exports){
 // Production steps of ECMA-262, Edition 5, 15.4.4.18
 // Reference: http://es5.github.io/#x15.4.4.18
@@ -92,6 +94,7 @@ if (!Array.prototype.forEach) {
     // 8. return undefined
   };
 }
+
 },{}],4:[function(require,module,exports){
 /**
  * Returns the data attribute labels and values from a given element
@@ -117,6 +120,7 @@ module.exports = function($el) {
     return data;
   }
 }
+
 },{}],5:[function(require,module,exports){
 /**
  * Preload an image and call a function onload
@@ -146,6 +150,7 @@ var preloader = function(src, obj, callback) {
 };
 
 module.exports = preloader;
+
 },{}],6:[function(require,module,exports){
 /**
  * Module to automatically swap image src's across css @media breakpoints
@@ -248,7 +253,6 @@ module.exports = function(options) {
    */
   var updateImages = function() {
     var
-      newMediaQuery = sassqwatch.fetchMediaQuery(),
       isLoaded      = false,
       thisMQ        = undefined,
       thisImage     = undefined,
@@ -261,16 +265,16 @@ module.exports = function(options) {
     for(i; i < knownSizes.length; i++) {
       thisImage = knownSizes[i];
       // checks if we're on a retina screen and if there is a 2x src defined
-      newSource = checkForRetinaSrc(thisImage, newMediaQuery);
+      newSource = checkForRetinaSrc(thisImage, sassqwatch.current);
 
       // if a new source isn't set
       if (!newSource) {
         // get the index of the current media query to start from
-        ii = sassqwatch.fetchMqIndex(newMediaQuery);
+        ii = sassqwatch.breakpoints.indexOf(sassqwatch.current);
 
         // decrement through the numbered mq's
         for (ii; ii > 0; ii--) {
-          thisMQ = sassqwatch.fetchMqName(ii);
+          thisMQ = sassqwatch.breakpoints[ii];
           newSource = checkForRetinaSrc(thisImage, thisMQ);
 
           // break the loop if a source is found
@@ -331,62 +335,85 @@ module.exports = function(options) {
 
   return sassqwatch;
 };
+
 },{"./elementify":1,"./extend":2,"./getData":4,"./preloader":5,"./sassqwatch":"sassqwatch"}],"sassqwatch":[function(require,module,exports){
 // Polyfills
 require('./forEach');
 
 // Elements
 var
-  $body              = document.getElementsByTagName('body')[0],
-  $orderElement      = document.getElementsByTagName('title')[0],
-  $listenElement     = document.getElementsByTagName('head')[0];
+  orderElement = document.getElementsByTagName('title')[0],
+  listenElement = document.getElementsByTagName('head')[0];
 
 // Module variables
-var
-  currentMediaQuery  = '',
-  lastMediaQuery     = '',
-  mqOrderNamed       = {},
-  mqOrderNumbered    = [],
-  callbackQueue      = [];
+var callbacks = { queue: [] };
 
 /**
  * Internal: Creates a queue of functions to call when the media query changes. 
  * @param  {String}  currentMediaQuery The current media query.
  * @param  {String}  lastMediaQuery    The previous media query.
  */
-var hasChanged = function(currentMediaQuery, lastMediaQuery) {
+callbacks.fire = function(currentMediaQuery, lastMediaQuery) {
   var i = 0;
-  for(i; i < callbackQueue.length; i++) {
-    callbackQueue[i].call(this, currentMediaQuery, lastMediaQuery);
+  for(i; i < callbacks.queue.length; i++) {
+    callbacks.queue[i].call(this, currentMediaQuery, lastMediaQuery);
   }
 };
 
 /**
  * Internal: When the browser is resized, update the media query
  */
-var onResize = function() {
-  lastMediaQuery = currentMediaQuery;
-
-  // Set the global current media query
-  currentMediaQuery = fetchMediaQuery();
+function onResize() {
+  // Set the last and current media queries
+  exports.previous = exports.current;
+  exports.current = exports.fetchMediaQuery();
 
   // The media query does not match the old
-  if (currentMediaQuery != lastMediaQuery) {
+  if (exports.current !== exports.previous) {
     // Fire an event noting that the media query has changed
-    hasChanged(currentMediaQuery, lastMediaQuery);
+    callbacks.fire(exports.current, exports.previous);
   }
-};
+}
 
 /**
- * Internal: Sets the order of media queries
+ * Internal: Returns the order of media queries from the CSS
  */
-var setOrder = function() {
-  var mediaQueries = getComputedStyle($orderElement).getPropertyValue('font-family');
-  mqOrderNumbered = mediaQueries.replace(/['"\s]/g, "").split(',');
+function setOrder() {
+  return getComputedStyle(orderElement).getPropertyValue('font-family').replace(/['"\s]/g, "").split(',');
+}
 
-  mqOrderNumbered.forEach(function(value, index) {
-    mqOrderNamed[value] = index;
-  });
+/**
+ * Internal: Returns the correct query method (isAbove, isBelow, or matches) given a string
+ * @param  {String} type 'min', 'max', or 'only'
+ * @return {Function}    The method.
+ */
+function getQueryMethod(type) {
+  type = type.toLowerCase();
+
+  if (type === 'min') {
+    return exports.isAbove;
+  } else if (type === 'max') {
+    return exports.isBelow;
+  } else if (type === 'only') {
+    return exports.matches;
+  } else {
+    return function() {
+      return false;
+    }
+  }
+}
+
+/**
+ * Public: Manually returns the current media query
+ */
+exports.fetchMediaQuery = function() {
+  // We read in the media query name from the html element's font family
+  var mq = getComputedStyle(listenElement).getPropertyValue('font-family');
+
+  // Strip out quotes and commas
+  mq = mq.replace(/['",]/g, '');
+
+  return mq;
 };
 
 /**
@@ -394,30 +421,9 @@ var setOrder = function() {
  * @param  {Function} callback The function to call when the media query changes
  * @return {Object}            The SassQwatch object
  */
-var onChange = function(callback) {
-  callbackQueue.push(callback);
+exports.onChange = function(callback) {
+  callbacks.queue.push(callback);
   return this;
-};
-
-/**
- * Internal: Returns the correct query method (isAbove, isBelow, or matches) given a string
- * @param  {String} type 'min', 'max', or 'only'
- * @return {Function}    The method.
- */
-var getQueryMethod = function(type) {
-  type = type.toLowerCase();
-
-  if (type === 'min') {
-    return isAbove;
-  } else if (type === 'max') {
-    return isBelow;
-  } else if (type === 'only') {
-    return matches;
-  } else {
-    return function() {
-      return false;
-    }
-  }
 };
 
 /**
@@ -427,7 +433,7 @@ var getQueryMethod = function(type) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var query = function(type, which, callback, fireOnce) {
+exports.query = function(type, which, callback, fireOnce) {
   var
     firedCount = 0,
     method = getQueryMethod(type),
@@ -446,8 +452,9 @@ var query = function(type, which, callback, fireOnce) {
       }
     };
 
-  check(currentMediaQuery, lastMediaQuery);
-  onChange(check);
+  fireOnce = fireOnce ? fireOnce : true;
+  check(exports.current, exports.previous);
+  exports.onChange(check);
 
   return this;
 };
@@ -458,8 +465,8 @@ var query = function(type, which, callback, fireOnce) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var min = function(which, callback, fireOnce) {
-  query('min', which, callback, fireOnce);
+exports.min = function(which, callback, fireOnce) {
+  exports.query('min', which, callback, fireOnce);
   return this;
 };
 
@@ -469,8 +476,8 @@ var min = function(which, callback, fireOnce) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var max = function(which, callback, fireOnce) {
-  query('max', which, callback, fireOnce);
+exports.max = function(which, callback, fireOnce) {
+  exports.query('max', which, callback, fireOnce);
   return this;
 };
 
@@ -480,8 +487,8 @@ var max = function(which, callback, fireOnce) {
  * @param  {Function} callback The callback function
  * @return {Object}            The SassQwatch object
  */
-var only = function(which, callback) {
-  query('only', which, callback);
+exports.only = function(which, callback) {
+  exports.query('only', which, callback);
   return this;
 };
 
@@ -490,11 +497,15 @@ var only = function(which, callback) {
  * @param  {String}  which The name of the media query to check against
  * @return {Boolean}       Is the current media query greater than or equal to the specified breakpoint?
  */
-var isAbove = function (which) {
-  var currentMq = mqOrderNamed[fetchMediaQuery()],
-    whichMq = mqOrderNamed[which];
+exports.isAbove = function (which, inclusive) {
+  var currentMq = exports.breakpoints.indexOf(exports.current),
+    whichMq = exports.breakpoints.indexOf(which);
 
-  return (currentMq >= whichMq);
+  if (inclusive === false) {
+    return (currentMq > whichMq);
+  } else {
+    return (currentMq >= whichMq);
+  }
 };
 
 /**
@@ -502,11 +513,15 @@ var isAbove = function (which) {
  * @param  {String}  which The name of the media query to check against
  * @return {Boolean}       Is the current media query less than the specified breakpoint?
  */
-var isBelow = function (which) {
-  var currentMq = mqOrderNamed[fetchMediaQuery()],
-    whichMq = mqOrderNamed[which];
+exports.isBelow = function (which, inclusive) {
+  var currentMq = exports.breakpoints.indexOf(exports.current),
+    whichMq = exports.breakpoints.indexOf(which);
 
-  return (currentMq < whichMq);
+  if (inclusive === true) {
+    return (currentMq <= whichMq);
+  } else {
+    return (currentMq < whichMq);
+  }
 };
 
 /**
@@ -514,76 +529,23 @@ var isBelow = function (which) {
  * @param  {String}  which The name of the media query to check against
  * @return {Boolean}       Is the current media query the same as the specified breakpoint?
  */
-var matches = function(which) {
+exports.matches = function(which) {
   // See if the current media query matches the requested one
-  return (fetchMediaQuery() == which);
+  return (exports.current == which);
 };
 
-/**
- * Public: Manually returns the current media query
- */
-var fetchMediaQuery = function() {
-  // We read in the media query name from the html element's font family
-  var mq = getComputedStyle($listenElement).getPropertyValue('font-family');
+// expose the responsiveImages module
+exports.responsiveImages = require('./responsiveImages');
 
-  // Strip out quotes and commas
-  mq = mq.replace(/['",]/g, '');
+// setup the breakpoints
+exports.breakpoints = setOrder();
 
-  return mq;
-};
+// fetch the current media query
+exports.current = exports.fetchMediaQuery();
 
-/**
- * Public: Fetch the index of a named breakpoint
- * @param  {String} mediaQuery The name of the media query
- * @return {Number}            The index of the media query in the array of ordered media queries
- */
-var fetchMqIndex = function(mediaQuery) {
-  return mqOrderNamed[mediaQuery];
-};
+exports.previous = '';
 
-/**
- * Public: Fetch the name of breakpoint by its index
- * @param  {Number} index The index of the media query in the ordered array of media queries
- * @return {String}       The name of the media query
- */
-var fetchMqName = function(index) {
-  return mqOrderNumbered[index];
-};
+// handle resizing
+window.onresize = onResize;
 
-/**
- * Public: Responsive Images module
- */
-var responsiveImages = require('./responsiveImages');
-
-/**
- * Internal: Immediately invoked constructor function
- * Sets everything up and then returns all the public methods.
- */
-var constructor = function() {
-  // set the order of the breakpoints
-  setOrder();
-
-  // fetch the current media query
-  currentMediaQuery = fetchMediaQuery();
-
-  window.onresize = onResize;
-
-  // return the public methods
-  return {
-    responsiveImages:   responsiveImages,
-    fetchMediaQuery:    fetchMediaQuery,
-    fetchMqIndex:       fetchMqIndex,
-    fetchMqName:        fetchMqName,
-    onChange:           onChange,
-    isAbove:            isAbove,
-    isBelow:            isBelow,
-    matches:            matches,
-    query:              query,
-    only:               only,
-    min:                min,
-    max:                max
-  };
-}.call();
-
-module.exports = constructor;
-},{"./forEach":3,"./responsiveImages":6}]},{},[]);
+},{"./forEach":3,"./responsiveImages":6}]},{},["sassqwatch"]);
