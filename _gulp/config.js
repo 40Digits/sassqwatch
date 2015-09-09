@@ -62,7 +62,7 @@ exports.eta = {
   },
   symbols: {
     destSass: './_src/sass/',
-    fontPath: '/assets/fonts/symbols/',
+    fontPath: 'fonts/symbols/',
     renameSass: {
       basename: '_components.symbols',
       extname: '.scss'
